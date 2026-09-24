@@ -18,8 +18,9 @@ export default function SitesPage() {
       <Nav />
       <main>
         <SitesHero />
-        <Divisor de="escura" para="clara" />
+        <Divisor de="escura" para="papel" />
         <SitesTipos />
+        <Divisor de="papel" para="clara" />
         <SitesIncluido />
         <Divisor de="clara" para="escura" />
         <Footer />

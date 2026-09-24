@@ -15,42 +15,56 @@ export const MODULOS = [
   { id: "cadastros", label: "Clientes e fornecedores" },
 ] as const;
 
-export const orcamentoSchema = z.object({
-  nome: z
+const IDS_MODULOS = MODULOS.map((modulo) => modulo.id) as [
+  (typeof MODULOS)[number]["id"],
+  ...(typeof MODULOS)[number]["id"][],
+];
+
+// Campos de uma linha só: nada de quebra de linha nem caracteres de controle
+// (evita injeção no assunto do e-mail e lixo invisível).
+const SEM_CONTROLE = /^[^\u0000-\u001f\u007f]*$/u;
+
+function linhaUnica(min: number, max: number, vazio: string, longo: string) {
+  return z
     .string()
     .trim()
-    .min(2, "Escreva seu nome completo.")
-    .max(80, "Nome muito longo."),
-  adega: z
-    .string()
-    .trim()
-    .min(2, "Escreva o nome do negócio.")
-    .max(80, "Nome muito longo."),
-  cidade: z
-    .string()
-    .trim()
-    .min(2, "Escreva a cidade e o estado.")
-    .max(80, "Texto muito longo."),
-  email: z
-    .string()
-    .trim()
-    .min(1, "Escreva um e-mail para eu responder.")
-    .email("Esse e-mail não parece válido. Confira antes de enviar."),
-  whatsapp: z
-    .string()
-    .trim()
-    .refine(
-      (valor) => valor.replace(/\D/g, "").length >= 10,
-      "Escreva o WhatsApp com DDD.",
-    ),
-  catalogo: z.enum(["ate-300", "300-1000", "mais-1000"], {
-    message: "Escolha o tamanho do catálogo.",
-  }),
-  modulos: z.array(z.string()).min(1, "Marque pelo menos um módulo."),
-  mensagem: z.string().trim().max(1500, "Máximo de 1.500 caracteres.").optional(),
-  // Campo isca: fica escondido e sempre vazio para uma pessoa real.
-  site: z.string().max(0).optional(),
-});
+    .min(min, vazio)
+    .max(max, longo)
+    .regex(SEM_CONTROLE, "Use só texto simples, sem quebras de linha.");
+}
+
+// .strict() recusa qualquer campo extra enviado (bloqueia mass assignment).
+export const orcamentoSchema = z
+  .object({
+    nome: linhaUnica(2, 80, "Escreva seu nome completo.", "Nome muito longo."),
+    adega: linhaUnica(2, 80, "Escreva o nome do negócio.", "Nome muito longo."),
+    cidade: linhaUnica(2, 80, "Escreva a cidade e o estado.", "Texto muito longo."),
+    email: z
+      .string()
+      .trim()
+      .min(1, "Escreva um e-mail para eu responder.")
+      .max(120, "E-mail muito longo.")
+      .email("Esse e-mail não parece válido. Confira antes de enviar."),
+    whatsapp: z
+      .string()
+      .trim()
+      .max(20, "Número muito longo.")
+      .refine((valor) => {
+        const digitos = valor.replace(/\D/g, "").length;
+        return digitos >= 10 && digitos <= 11;
+      }, "Escreva o WhatsApp com DDD."),
+    catalogo: z.enum(["ate-300", "300-1000", "mais-1000"], {
+      message: "Escolha o tamanho do catálogo.",
+    }),
+    modulos: z
+      .array(z.enum(IDS_MODULOS))
+      .min(1, "Marque pelo menos um módulo.")
+      .max(MODULOS.length),
+    mensagem: z.string().trim().max(1500, "Máximo de 1.500 caracteres.").optional(),
+    // Campo isca: fica escondido e sempre vazio para uma pessoa real.
+    site: z.string().max(200).optional(),
+  })
+  .strict();
 
 export type OrcamentoInput = z.infer<typeof orcamentoSchema>;
 

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { OrcamentoForm } from "@/components/orcamento-form";
+import { Logo } from "@/components/site/logo";
 
 export const metadata: Metadata = {
   title: "Pedir orçamento | Nexo Sistemas",
@@ -9,29 +11,34 @@ export const metadata: Metadata = {
 
 export default function OrcamentoPage() {
   return (
-    <main className="min-h-screen bg-white">
-      <div className="mx-auto grid max-w-6xl gap-16 px-6 py-16 md:py-24 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:gap-24">
-        <aside className="lg:sticky lg:top-24 lg:self-start">
-          <h1 className="font-[family-name:var(--font-archivo)] text-4xl font-bold leading-[1.05] tracking-[-0.03em] text-[#17355E] md:text-5xl">
-            Pedir orçamento
-          </h1>
-          <p className="mt-5 max-w-[38ch] text-lg leading-relaxed text-[#17355E]/75">
+    <main className="min-h-screen bg-papel">
+      <header className="mx-auto flex h-20 max-w-6xl items-center px-6">
+        <Link href="/" aria-label="Nexo Sistemas, voltar ao início" className="rounded-md focus-visible:outline-2 focus-visible:outline-offset-4">
+          <Logo grande />
+        </Link>
+      </header>
+
+      <div className="mx-auto grid max-w-6xl gap-6 px-6 pb-16 md:pb-24 lg:grid-cols-[minmax(0,24rem)_minmax(0,1fr)] lg:gap-8">
+        <aside className="secao-escura relative isolate overflow-hidden rounded-3xl p-8 md:p-10 lg:sticky lg:top-8 lg:self-start">
+          <h1 className="titulo text-4xl leading-[1] text-white md:text-5xl">Pedir orçamento</h1>
+          <p className="mt-5 max-w-[38ch] text-lg leading-relaxed text-white/85">
             Conte como o seu negócio funciona hoje. Respondo pelo WhatsApp com o
             valor e o prazo de instalação.
           </p>
 
-          <dl className="mt-10 space-y-6 border-t border-[#17355E]/10 pt-8">
+          <dl className="mt-10 space-y-6 border-t border-white/20 pt-8">
             <div>
-              <dt className="text-sm text-[#17355E]/60">Resposta</dt>
-              <dd className="mt-1 text-[#17355E]">Em até um dia útil</dd>
+              <dt className="text-sm font-medium text-white/80">Resposta</dt>
+              <dd className="titulo mt-1 text-xl text-white">Em até um dia útil</dd>
             </div>
             <div>
-              <dt className="text-sm text-[#17355E]/60">Prefere conversar?</dt>
-              <dd className="mt-1">
+              <dt className="text-sm font-medium text-white/80">Prefere conversar?</dt>
+              <dd className="mt-2">
                 <a
-                  className="text-[#2E86D4] underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2E86D4]"
+                  className="inline-flex h-11 items-center gap-2 rounded-full bg-white px-5 text-[15px] font-semibold text-tinta transition-colors hover:bg-menta focus-visible:outline-2 focus-visible:outline-offset-2"
                   href="https://wa.me/5514991096832"
                 >
+                  <span className="pulso-vivo h-2 w-2 rounded-full bg-menta-forte" aria-hidden="true" />
                   Chamar no WhatsApp
                 </a>
               </dd>
@@ -39,7 +46,7 @@ export default function OrcamentoPage() {
           </dl>
         </aside>
 
-        <div className="rounded-lg bg-[#F1F5F3] p-6 md:p-10">
+        <div className="rounded-3xl bg-white p-6 sombra-tela md:p-10">
           <OrcamentoForm />
         </div>
       </div>

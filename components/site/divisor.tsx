@@ -1,8 +1,11 @@
 const TONS = {
   clara: "var(--branco)",
-  escura: "var(--marinho)",
+  papel: "var(--papel)",
+  escura: "var(--cobalto)",
+  profunda: "var(--cobalto-profundo)",
 } as const;
 
+/** Costura entre capítulos: o próximo sobe por cima do anterior com cantos arredondados. */
 export function Divisor({
   de,
   para,
@@ -11,17 +14,11 @@ export function Divisor({
   para: keyof typeof TONS;
 }) {
   return (
-    <div aria-hidden="true" className="relative h-16 overflow-hidden sm:h-24 lg:h-32" style={{ background: TONS[de] }}>
-      <svg
-        viewBox="0 0 1440 220"
-        preserveAspectRatio="none"
-        className="divisor-onda absolute inset-x-0 -top-6 h-[calc(100%+3rem)] w-full"
-      >
-        <path
-          d="M0,64 C 220,160 460,10 720,96 C 980,182 1220,24 1440,110 L1440,220 L0,220 Z"
-          fill={TONS[para]}
-        />
-      </svg>
+    <div aria-hidden="true" className="relative h-10 sm:h-14" style={{ background: TONS[de] }}>
+      <div
+        className="absolute inset-x-0 bottom-0 h-full rounded-t-[2rem] sm:rounded-t-[3rem]"
+        style={{ background: TONS[para] }}
+      />
     </div>
   );
 }

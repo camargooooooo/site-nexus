@@ -25,7 +25,7 @@ export function CtaFlutuante() {
         >
           <Link
             href="/orcamento"
-            className="flex h-12 items-center justify-center gap-2 rounded-full bg-verde-forte px-5 text-sm font-medium text-white shadow-[0_12px_30px_-8px_rgba(21,122,82,0.55)] transition-colors hover:bg-[#12694A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marinho"
+            className="flex h-12 items-center justify-center gap-2 rounded-full bg-menta px-5 text-sm font-bold text-tinta shadow-[0_14px_32px_-8px_rgb(11_22_80/0.45)] ring-2 ring-white transition-colors hover:bg-[#5cf0a8] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tinta"
           >
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" aria-hidden="true">
               <path

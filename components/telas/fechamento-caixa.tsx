@@ -1,3 +1,5 @@
+import { ContadorReal } from "@/components/site/contador";
+
 function formatarReal(valor: number) {
   return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
@@ -16,33 +18,40 @@ const DIFERENCA = INFORMADO - ESPERADO;
 
 export function FechamentoCaixa() {
   return (
-    <div className="w-full border border-marinho/15 bg-white font-[family-name:var(--font-instrument)] text-marinho shadow-[0_24px_60px_-24px_rgba(23,53,94,0.25)]">
-      <div className="flex items-center justify-between bg-marinho px-5 py-3 text-white sm:px-6">
+    <div className="w-full overflow-hidden rounded-xl border border-tinta/10 bg-white font-corpo text-tinta sombra-tela">
+      <div className="flex items-center justify-between bg-cobalto px-5 py-3 text-white sm:px-6">
         <span className="text-[15px] font-medium">Nexo Caixa — Fechamento do dia</span>
-        <span className="text-[13px] text-white/60">10/09</span>
+        <span className="text-[13px] text-white/85">10/09</span>
       </div>
 
       <div className="text-[15px]">
-        {LINHAS.map((l) => (
-          <div key={l.rotulo} className="flex items-center justify-between border-b border-marinho/5 px-5 py-2.5 sm:px-6">
-            <span className="text-marinho/70">{l.rotulo}</span>
-            <span className="tabular-nums">{formatarReal(l.valor)}</span>
+        {LINHAS.map((l, i) => (
+          <div key={l.rotulo} className="flex items-center justify-between border-b border-tinta/5 px-5 py-2.5 sm:px-6">
+            <span className="text-tinta/70">{l.rotulo}</span>
+            <ContadorReal valor={l.valor} atraso={i * 0.08} />
           </div>
         ))}
 
-        <div className="flex items-center justify-between border-b border-marinho/10 px-5 py-2.5 font-medium sm:px-6">
+        <div className="flex items-center justify-between border-b border-tinta/10 px-5 py-2.5 font-medium sm:px-6">
           <span>Fechamento esperado</span>
-          <span className="tabular-nums">{formatarReal(ESPERADO)}</span>
+          <ContadorReal valor={ESPERADO} atraso={0.45} />
         </div>
-        <div className="flex items-center justify-between border-b border-marinho/10 px-5 py-2.5 sm:px-6">
-          <span className="text-marinho/70">Fechamento informado</span>
+        <div className="flex items-center justify-between border-b border-tinta/10 px-5 py-2.5 sm:px-6">
+          <span className="text-tinta/70">Fechamento informado</span>
           <span className="tabular-nums">{formatarReal(INFORMADO)}</span>
         </div>
         <div className="flex items-center justify-between px-5 py-4 sm:px-6">
-          <span className="font-medium">Diferença</span>
+          <span className="flex items-center gap-3 font-medium">
+            Diferença
+            {DIFERENCA === 0 && (
+              <span className="rounded-full bg-menta/25 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-menta-escura">
+                Conferido
+              </span>
+            )}
+          </span>
           <span
-            className={`font-[family-name:var(--font-archivo)] text-2xl font-semibold tabular-nums ${
-              DIFERENCA === 0 ? "text-verde-forte" : "text-erro"
+            className={`titulo text-2xl tabular-nums ${
+              DIFERENCA === 0 ? "text-menta-escura" : "text-erro"
             }`}
           >
             {formatarReal(DIFERENCA)}
@@ -50,9 +59,9 @@ export function FechamentoCaixa() {
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-x-4 gap-y-1 border-t border-marinho/10 px-5 py-3 text-[12px] text-marinho/45 sm:px-6">
+      <div className="flex flex-wrap gap-x-4 gap-y-1 border-t border-tinta/10 px-5 py-3 text-[12px] text-tinta/65 sm:px-6">
         <span>Contas a pagar hoje</span>
-        <span className="tabular-nums text-marinho/70">Fornecedor Rio Claro — {formatarReal(1890)}</span>
+        <span className="tabular-nums text-tinta/70">Fornecedor Rio Claro — {formatarReal(1890)}</span>
       </div>
     </div>
   );

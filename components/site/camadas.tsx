@@ -10,6 +10,9 @@ import {
   type MotionValue,
 } from "motion/react";
 import { FichaFiado } from "@/components/telas/ficha-fiado";
+import { Relatorio } from "@/components/telas/relatorio";
+import { TelaEstoque } from "@/components/telas/tela-estoque";
+import { TituloRevelado } from "@/components/site/revelar";
 
 const CAMADAS = [
   { titulo: "Produto", texto: "Cada produto cadastrado, com preço e código de barras." },
@@ -24,25 +27,30 @@ function Camada({
   progresso,
   indice,
   total,
+  ativo,
 }: {
   titulo: string;
   progresso: MotionValue<number>;
   indice: number;
   total: number;
+  ativo: boolean;
 }) {
   const inicio = indice / total;
-  const opacidade = useTransform(progresso, [inicio, inicio + 0.06], [0.25, 1]);
+  const opacidade = useTransform(progresso, [inicio, inicio + 0.06], [0.45, 1]);
   const x = useTransform(progresso, [inicio, inicio + 0.06], [-8, 0]);
 
   return (
     <motion.li
       style={{ opacity: opacidade, x }}
-      className="flex items-center gap-5 border-b border-white/10 py-5"
+      className="flex items-center gap-5 border-b border-white/15 py-5"
     >
-      <span className="font-[family-name:var(--font-archivo)] text-base tabular-nums text-white/35">
-        {String(indice + 1).padStart(2, "0")}
-      </span>
-      <span className="font-[family-name:var(--font-archivo)] text-3xl font-semibold text-white lg:text-4xl">
+      <span
+        aria-hidden="true"
+        className={`h-3 w-3 shrink-0 rounded-full transition-[background-color,transform] duration-500 ${
+          ativo ? "scale-125 bg-menta" : "bg-white/30"
+        }`}
+      />
+      <span className={`titulo text-3xl transition-colors duration-500 lg:text-4xl ${ativo ? "text-white" : "text-white/80"}`}>
         {titulo}
       </span>
     </motion.li>
@@ -52,7 +60,7 @@ function Camada({
 function PainelFiado() {
   return (
     <div>
-      <ul className="space-y-1.5 text-[15px] text-white/70">
+      <ul className="space-y-1.5 text-[15px] text-white/85">
         <li>
           <span className="font-medium text-white">Quem levou?</span> Fernando Batista.
         </li>
@@ -97,8 +105,8 @@ export function Camadas() {
           aria-hidden="true"
         >
           {[
-            { x1: 60, y1: 20, x2: 28, y2: 86, cor: "var(--verde)", atraso: 0.3 },
-            { x1: 60, y1: 20, x2: 92, y2: 86, cor: "#178F82", atraso: 0.39 },
+            { x1: 60, y1: 20, x2: 28, y2: 86, cor: "var(--menta)", atraso: 0.3 },
+            { x1: 60, y1: 20, x2: 92, y2: 86, cor: "var(--sol)", atraso: 0.39 },
             { x1: 28, y1: 86, x2: 92, y2: 86, cor: "#FFFFFF", atraso: 0.48 },
           ].map((a, i) => (
             <motion.line
@@ -117,9 +125,9 @@ export function Camadas() {
             />
           ))}
           {[
-            { cx: 60, cy: 20, cor: "var(--verde)", atraso: 0 },
-            { cx: 28, cy: 86, cor: "var(--verde)", atraso: 0.09 },
-            { cx: 92, cy: 86, cor: "var(--azul)", atraso: 0.18 },
+            { cx: 60, cy: 20, cor: "var(--menta)", atraso: 0 },
+            { cx: 28, cy: 86, cor: "var(--menta)", atraso: 0.09 },
+            { cx: 92, cy: 86, cor: "var(--sol)", atraso: 0.18 },
           ].map((n, i) => (
             <motion.circle
               key={i}
@@ -135,13 +143,11 @@ export function Camadas() {
             />
           ))}
         </motion.svg>
-        <p className="mt-6 font-[family-name:var(--font-archivo)] text-sm font-semibold tabular-nums text-white/40">
-          05
-        </p>
-        <h2 className="mt-2 max-w-[18ch] font-[family-name:var(--font-archivo)] text-[clamp(2.25rem,6vw,4rem)] font-bold leading-[1.02] tracking-[-0.03em] text-white">
-          Camadas do Nexo
-        </h2>
-        <p className="mt-4 max-w-[52ch] text-lg leading-relaxed text-white/65">
+        <TituloRevelado
+          texto="Camadas do Nexo"
+          className="titulo mt-6 max-w-[18ch] text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.98] text-white"
+        />
+        <p className="mt-5 max-w-[52ch] text-lg leading-relaxed text-white/85">
           Um sistema construído sob medida, em cima do que já existe no seu negócio.
         </p>
       </div>
@@ -149,22 +155,37 @@ export function Camadas() {
       {!reduzirMovimento && (
         <div ref={ref} className="relative hidden lg:block" style={{ height: "350vh" }}>
           <div className="sticky top-0 flex h-dvh items-center px-16">
-            <div className="grid w-full grid-cols-2 gap-16">
+            <div className="grid w-full grid-cols-2 items-center gap-16">
               <ol>
                 {CAMADAS.map((c, i) => (
-                  <Camada key={c.titulo} titulo={c.titulo} progresso={scrollYProgress} indice={i} total={CAMADAS.length} />
+                  <Camada key={c.titulo} titulo={c.titulo} progresso={scrollYProgress} indice={i} total={CAMADAS.length} ativo={i === passoAtivo} />
                 ))}
               </ol>
-              <div className="border-l border-white/10 pl-12">
-                <p className="text-sm text-white/40">
-                  {String(passoAtivo + 1).padStart(2, "0")} / {String(CAMADAS.length).padStart(2, "0")}
+              <div className="rounded-3xl bg-white/[0.08] p-10 ring-1 ring-inset ring-white/15">
+                <p className="flex items-center gap-3 text-sm font-semibold text-sol">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-sol text-[13px] font-bold tabular-nums text-tinta">
+                    {passoAtivo + 1}
+                  </span>
+                  {atual.titulo}
                 </p>
                 {atual.titulo === "Fiado" ? (
                   <div className="mt-3">
                     <PainelFiado />
                   </div>
                 ) : (
-                  <p className="mt-3 max-w-[36ch] text-xl leading-relaxed text-white/75">{atual.texto}</p>
+                  <>
+                    <p className="mt-3 max-w-[36ch] text-2xl leading-snug text-white">{atual.texto}</p>
+                    {atual.titulo === "Estoque" && (
+                      <div className="mt-6 max-w-md text-[13px]">
+                        <TelaEstoque ativo={0} />
+                      </div>
+                    )}
+                    {atual.titulo === "Relatórios" && (
+                      <div className="mt-6 max-w-sm">
+                        <Relatorio />
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             </div>
@@ -174,19 +195,18 @@ export function Camadas() {
 
       <div className={`space-y-10 px-6 py-16 sm:px-10 lg:px-16 ${reduzirMovimento ? "" : "lg:hidden"}`}>
         {CAMADAS.map((c) => (
-          <div key={c.titulo} className="border-t border-white/10 pt-6">
-            <p className="font-[family-name:var(--font-archivo)] text-2xl font-semibold text-white">{c.titulo}</p>
+          <div key={c.titulo} className="border-t border-white/15 pt-6">
+            <p className="titulo text-2xl text-white">{c.titulo}</p>
             {c.titulo === "Fiado" ? (
               <div className="mt-3">
                 <PainelFiado />
               </div>
             ) : (
-              <p className="mt-2 max-w-[40ch] text-[15px] leading-relaxed text-white/65">{c.texto}</p>
+              <p className="mt-2 max-w-[40ch] text-base leading-relaxed text-white/85">{c.texto}</p>
             )}
           </div>
         ))}
       </div>
-      <div className="h-16" />
     </section>
   );
 }

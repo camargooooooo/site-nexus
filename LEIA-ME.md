@@ -75,3 +75,25 @@ npm run dev
 Abra `localhost:3000/orcamento`, envie um pedido e confira a caixa de entrada.
 Se der erro, olhe o terminal: a rota registra o motivo real no console e devolve
 mensagem genérica para o visitante.
+
+## Segurança
+
+O que já está no código:
+
+- **Headers** (`next.config.ts`): CSP, HSTS (força HTTPS), `X-Frame-Options`, `nosniff`,
+  `Referrer-Policy`, `Permissions-Policy`; `X-Powered-By` desligado.
+- **Rota `/api/orcamento`**: só aceita `POST` JSON vindo do próprio domínio, corpo até 10 KB,
+  3 envios por IP a cada 10 min, validação estrita (campos extras são recusados), escape de
+  HTML no e-mail, respostas genéricas sem detalhes internos e sem cache.
+- **Robôs**: campo isca + Vercel BotID (`instrumentation-client.ts`). O BotID só roda na Vercel.
+- **Chave da Resend**: só no servidor (`process.env`), nunca com `NEXT_PUBLIC_`. Modelo em `.env.example`.
+- **Cookies**: aviso de consentimento (`components/site/aviso-cookies.tsx`). Antes de ligar
+  qualquer analytics, confira `consentiuMedicao()`.
+
+Para fazer no painel da Vercel (não dá para fazer pelo código):
+
+1. **Firewall → Rate limit**: crie uma regra para `/api/orcamento` (ex.: 5 req/min por IP).
+   O limite em memória da rota vale por instância; a regra do Firewall vale para todas.
+2. **Firewall → Configure → Vercel BotID Deep Analysis**: ative.
+3. **Settings → Security → Secure backend access with OIDC**: precisa estar ligado para o BotID.
+4. Rode `npm audit` antes de cada deploy.

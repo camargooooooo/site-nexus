@@ -19,11 +19,11 @@ export default function Home() {
         <Divisor de="escura" para="clara" />
         <Problema />
         <PassaOProduto />
-        <Divisor de="clara" para="escura" />
+        <Divisor de="clara" para="profunda" />
         <BaixaOEstoque />
-        <Divisor de="escura" para="clara" />
+        <Divisor de="profunda" para="papel" />
         <FechaOCaixa />
-        <Divisor de="clara" para="escura" />
+        <Divisor de="papel" para="escura" />
         <Camadas />
         <Divisor de="escura" para="clara" />
         <FichaTecnica />

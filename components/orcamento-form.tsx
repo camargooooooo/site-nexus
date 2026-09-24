@@ -36,7 +36,7 @@ import {
 } from "@/lib/orcamento-schema";
 
 const campo =
-  "border-[#17355E]/15 bg-white text-[#17355E] placeholder:text-[#17355E]/40 focus-visible:border-[#1B9A66] focus-visible:ring-[#1B9A66]/25";
+  "h-11 rounded-xl border-tinta/15 bg-papel/60 text-base md:text-base text-tinta placeholder:text-tinta/50 transition-colors hover:border-tinta/30 focus-visible:border-cobalto focus-visible:bg-white focus-visible:ring-cobalto/20";
 
 export function OrcamentoForm() {
   const [enviado, setEnviado] = useState(false);
@@ -88,28 +88,28 @@ export function OrcamentoForm() {
       >
         <div
           aria-hidden
-          className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#1B9A66]"
+          className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-menta"
         >
           <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none">
             <path
               d="M5 12.5l4.5 4.5L19 7.5"
-              stroke="#FFFFFF"
+              stroke="var(--tinta)"
               strokeWidth="2.2"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
           </svg>
         </div>
-        <h2 className="mt-6 font-[family-name:var(--font-archivo)] text-2xl font-semibold tracking-[-0.02em] text-[#17355E]">
+        <h2 className="titulo mt-6 text-3xl text-tinta">
           Pedido enviado
         </h2>
-        <p className="mx-auto mt-3 max-w-[40ch] text-[#17355E]/75">
+        <p className="mx-auto mt-3 max-w-[40ch] text-tinta/75">
           Recebi os dados da {form.getValues("adega")}. Respondo no seu WhatsApp
           em até um dia útil.
         </p>
         <Button
           variant="outline"
-          className="mt-8 border-[#17355E]/20 text-[#17355E] hover:bg-white"
+          className="mt-8 h-11 rounded-full border-tinta/20 px-6 text-tinta hover:bg-papel"
           onClick={() => {
             form.reset();
             setEnviado(false);
@@ -142,7 +142,7 @@ export function OrcamentoForm() {
             name="nome"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#17355E]">Seu nome</FormLabel>
+                <FormLabel className="font-semibold text-tinta">Seu nome</FormLabel>
                 <FormControl>
                   <Input placeholder="Gabriel Camargo" className={campo} {...field} />
                 </FormControl>
@@ -156,7 +156,7 @@ export function OrcamentoForm() {
             name="adega"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#17355E]">Nome do negócio</FormLabel>
+                <FormLabel className="font-semibold text-tinta">Nome do negócio</FormLabel>
                 <FormControl>
                   <Input placeholder="Mercadinho Bom Preço" className={campo} {...field} />
                 </FormControl>
@@ -170,7 +170,7 @@ export function OrcamentoForm() {
             name="cidade"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#17355E]">Cidade</FormLabel>
+                <FormLabel className="font-semibold text-tinta">Cidade</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Lençóis Paulista, SP"
@@ -188,7 +188,7 @@ export function OrcamentoForm() {
             name="whatsapp"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#17355E]">WhatsApp</FormLabel>
+                <FormLabel className="font-semibold text-tinta">WhatsApp</FormLabel>
                 <FormControl>
                   <Input
                     inputMode="tel"
@@ -214,7 +214,7 @@ export function OrcamentoForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-[#17355E]">E-mail</FormLabel>
+              <FormLabel className="font-semibold text-tinta">E-mail</FormLabel>
               <FormControl>
                 <Input
                   type="email"
@@ -234,12 +234,12 @@ export function OrcamentoForm() {
           name="catalogo"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-[#17355E]">
+              <FormLabel className="font-semibold text-tinta">
                 Quantos produtos você vende hoje
               </FormLabel>
               <Select onValueChange={field.onChange} value={field.value}>
                 <FormControl>
-                  <SelectTrigger className={`w-full ${campo}`}>
+                  <SelectTrigger className={`w-full ${campo} data-[size=default]:h-11`}>
                     <SelectValue placeholder="Escolha o tamanho do catálogo" />
                   </SelectTrigger>
                 </FormControl>
@@ -251,7 +251,7 @@ export function OrcamentoForm() {
                   ))}
                 </SelectContent>
               </Select>
-              <FormDescription className="text-[#17355E]/60">
+              <FormDescription className="text-tinta/65">
                 Um número aproximado já serve.
               </FormDescription>
               <FormMessage />
@@ -264,7 +264,7 @@ export function OrcamentoForm() {
           name="modulos"
           render={() => (
             <FormItem>
-              <FormLabel className="text-[#17355E]">
+              <FormLabel className="font-semibold text-tinta">
                 O que você mais precisa resolver
               </FormLabel>
               <div className="mt-3 grid gap-3 sm:grid-cols-2">
@@ -276,7 +276,7 @@ export function OrcamentoForm() {
                     render={({ field }) => {
                       const marcado = field.value?.includes(modulo.id);
                       return (
-                        <FormItem className="flex items-start gap-3 space-y-0 rounded-md border border-[#17355E]/12 bg-white p-3 has-[button[data-state=checked]]:border-[#1B9A66]">
+                        <FormItem className="flex items-start gap-3 space-y-0 rounded-xl border border-tinta/12 bg-white p-3.5 transition-colors hover:border-tinta/30 has-[button[data-state=checked]]:border-cobalto has-[button[data-state=checked]]:bg-cobalto/[0.05]">
                           <FormControl>
                             <Checkbox
                               checked={marcado}
@@ -287,10 +287,10 @@ export function OrcamentoForm() {
                                     : field.value?.filter((id) => id !== modulo.id),
                                 )
                               }
-                              className="mt-0.5 border-[#17355E]/30 data-[state=checked]:border-[#1B9A66] data-[state=checked]:bg-[#1B9A66]"
+                              className="mt-0.5 border-tinta/30 data-[state=checked]:border-cobalto data-[state=checked]:bg-cobalto"
                             />
                           </FormControl>
-                          <FormLabel className="text-sm font-normal leading-snug text-[#17355E]">
+                          <FormLabel className="text-sm font-medium leading-snug text-tinta">
                             {modulo.label}
                           </FormLabel>
                         </FormItem>
@@ -309,14 +309,14 @@ export function OrcamentoForm() {
           name="mensagem"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-[#17355E]">
+              <FormLabel className="font-semibold text-tinta">
                 Mais alguma coisa? (opcional)
               </FormLabel>
               <FormControl>
                 <Textarea
                   rows={5}
                   placeholder="Como você controla o estoque e o fiado hoje, quantos caixas tem na loja, se já usa algum sistema."
-                  className={`resize-none ${campo}`}
+                  className={`resize-none ${campo} h-auto min-h-32 py-3`}
                   {...field}
                 />
               </FormControl>
@@ -325,14 +325,14 @@ export function OrcamentoForm() {
           )}
         />
 
-        <div className="flex flex-col gap-4 border-t border-[#17355E]/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="max-w-[36ch] text-sm text-[#17355E]/60">
+        <div className="flex flex-col gap-4 border-t border-tinta/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="max-w-[36ch] text-sm text-tinta/70">
             Seus dados vão só para o meu e-mail. Nada de lista de disparo.
           </p>
           <Button
             type="submit"
             disabled={form.formState.isSubmitting}
-            className="h-11 bg-[#1B9A66] px-7 text-base text-white hover:bg-[#178456] focus-visible:ring-[#1B9A66]/40 disabled:opacity-70"
+            className="h-12 rounded-full bg-menta px-8 text-base font-bold text-tinta shadow-[0_10px_30px_-10px_rgb(46_232_143/0.8)] hover:bg-[#5cf0a8] focus-visible:ring-cobalto/40 disabled:opacity-70"
           >
             {form.formState.isSubmitting ? "Enviando…" : "Enviar pedido"}
           </Button>

@@ -52,10 +52,10 @@ function Frase({
   return (
     <motion.p
       style={{ opacity: opacidade, y: deslocamento, scale: escala, filter: filtro }}
-      className={`absolute inset-x-0 max-w-[20ch] font-[family-name:var(--font-archivo)] leading-[1.02] tracking-[-0.03em] text-marinho ${
+      className={`absolute inset-x-0 max-w-[22ch] titulo leading-[1.02] ${
         destaque
-          ? "text-[clamp(2.75rem,7vw,5.75rem)] font-bold"
-          : "text-[clamp(2.25rem,5.5vw,4.5rem)] font-normal"
+          ? "text-[clamp(2.75rem,6.5vw,5.75rem)] text-cobalto"
+          : "text-[clamp(2.25rem,5.2vw,4.5rem)] font-medium text-tinta [font-stretch:100%]"
       }`}
     >
       {texto}
@@ -71,7 +71,7 @@ export function Problema() {
   return (
     <section className="secao-clara">
       {!reduzirMovimento && (
-        <div ref={ref} className="relative hidden lg:block" style={{ height: "400vh" }}>
+        <div ref={ref} className="relative hidden lg:block" style={{ height: "260vh" }}>
           <div className="sticky top-0 flex h-dvh items-center px-16">
             <div className="relative h-[340px] w-full">
               {FRASES.map((texto, i) => (
@@ -93,8 +93,8 @@ export function Problema() {
         {FRASES.map((texto, i) => (
           <p
             key={texto}
-            className={`max-w-[18ch] font-[family-name:var(--font-archivo)] text-[clamp(2rem,8vw,3rem)] leading-[1.08] tracking-[-0.03em] text-marinho ${
-              i === FRASES.length - 1 ? "font-bold" : "font-normal"
+            className={`max-w-[18ch] titulo text-[clamp(2rem,8vw,3rem)] leading-[1.08] ${
+              i === FRASES.length - 1 ? "text-cobalto" : "font-medium text-tinta [font-stretch:100%]"
             }`}
           >
             {texto}
