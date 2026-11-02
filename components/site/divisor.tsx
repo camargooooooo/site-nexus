@@ -3,6 +3,7 @@ const TONS = {
   papel: "var(--papel)",
   escura: "var(--cobalto)",
   profunda: "var(--cobalto-profundo)",
+  noite: "var(--noite)",
 } as const;
 
 /** Costura entre capítulos: o próximo sobe por cima do anterior com cantos arredondados. */

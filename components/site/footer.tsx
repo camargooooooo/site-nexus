@@ -5,7 +5,7 @@ import { BotaoPreferenciasCookies } from "@/components/site/aviso-cookies";
 
 export function Footer() {
   return (
-    <footer className="secao-escura px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
+    <footer id="contato" className="secao-escura px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
       <div className="flex flex-col justify-between gap-10 lg:flex-row lg:items-end">
         <div>
           <p className="titulo max-w-[16ch] text-[clamp(2.5rem,6.5vw,5.5rem)] leading-[0.95] text-white">

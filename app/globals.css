@@ -17,6 +17,8 @@
   --color-menta-escura: var(--menta-escura);
   --color-sol: var(--sol);
   --color-coral: var(--coral);
+  --color-noite: var(--noite);
+  --color-noite-alta: var(--noite-alta);
   --color-erro: var(--erro);
   --font-display: var(--font-archivo);
   --font-corpo: var(--font-figtree);
@@ -78,6 +80,9 @@
   --sol: #ffc53d;
   --coral: #ff5a47;
   --erro: #d92d20;
+  /* Intelligence: a tinta da marca escurecida até quase preto, e a superfície elevada sobre ela. */
+  --noite: #060c33;
+  --noite-alta: #0d1747;
 
   --background: oklch(1 0 0);
   --foreground: var(--tinta);
@@ -169,7 +174,9 @@
     outline-color: var(--cobalto);
   }
   .secao-escura :focus-visible,
-  .secao-escura:focus-visible {
+  .secao-escura:focus-visible,
+  .secao-noite :focus-visible,
+  .secao-noite:focus-visible {
     outline-color: var(--menta);
   }
   a {
@@ -181,7 +188,9 @@
     text-wrap: balance;
   }
   [id^="sec-"],
-  #incluido {
+  [id^="int-"],
+  #incluido,
+  #contato {
     scroll-margin-top: 4.5rem;
   }
 }
@@ -245,6 +254,23 @@
   background:
     radial-gradient(56rem 32rem at 88% 112%, color-mix(in oklab, var(--cobalto) 60%, transparent), transparent 70%),
     var(--cobalto-profundo);
+}
+
+/* Noite (Intelligence): tinta quase preta, iluminada por poças de cobalto vindas de baixo. */
+.secao-noite {
+  color: var(--branco);
+  background:
+    radial-gradient(52rem 30rem at 85% 112%, color-mix(in oklab, var(--cobalto) 34%, transparent), transparent 70%),
+    radial-gradient(40rem 26rem at 0% 108%, color-mix(in oklab, var(--cobalto-profundo) 60%, transparent), transparent 70%),
+    var(--noite);
+}
+
+/* Só o hero da Intelligence recebe a luz cobalto por cima, como o hero de /. */
+.noite-topo {
+  background:
+    radial-gradient(64rem 40rem at 78% -6rem, color-mix(in oklab, var(--cobalto) 55%, transparent), transparent 66%),
+    radial-gradient(40rem 30rem at 80% 30%, color-mix(in oklab, var(--cobalto-profundo) 50%, transparent), transparent 70%),
+    var(--noite);
 }
 
 .sombra-tela {
